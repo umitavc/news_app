@@ -1,12 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:news_case/core/services/api_services.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final apiService = APIService();
+    return FutureBuilder(
+      future:  apiService.getNews(),
+       builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Container(
         decoration: BoxDecoration(
@@ -30,7 +39,7 @@ class NewsCard extends StatelessWidget {
                   topRight: Radius.circular(10),
                 ),
                 child: Image.network(
-                  'https://picsum.photos/250?image=9',
+                  snapshot.data![index].imageUrl.toString(),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
@@ -41,7 +50,7 @@ class NewsCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6),
                 child: Text(
-                  'newsTitle'.tr(),
+                  snapshot.data![index].title.toString(),
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade800),
                 ),
               ),
@@ -50,7 +59,8 @@ class NewsCard extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                 child: Text(
-                  'newsSubtitle'.tr(),
+                  
+                  snapshot.data![index].description.toString(),
                   style: const TextStyle(fontSize: 18, color: Colors.black),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 5,
@@ -60,6 +70,18 @@ class NewsCard extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ) ;
+            });
+      } else if (snapshot.hasError) {
+        return const Center(child: Text('Error'));
+      }else{
+        return const Center(child: CircularProgressIndicator());}
+    });
   }
 }
+
+
+
+
+
+
