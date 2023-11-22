@@ -92,65 +92,121 @@
 //   }
 // }
 
-class NewsModel {
-  String? uuid;
-  String? title;
-  String? description;
-  String? keywords;
-  String? snippet;
-  String? url;
-  String? imageUrl;
-  String? language;
-  String? publishedAt;
-  String? source;
-  List<Null>? categories;
-  Null? relevanceScore;
+// class NewsModel {
+//   String? uuid;
+//   String? title;
+//   String? description;
+//   String? keywords;
+//   String? snippet;
+//   String? url;
+//   String? imageUrl;
+//   String? language;
+//   String? publishedAt;
+//   String? source;
+//   List<Null>? categories;
+//   Null? relevanceScore;
 
-  NewsModel(
-      {this.uuid,
-      this.title,
-      this.description,
-      this.keywords,
-      this.snippet,
-      this.url,
-      this.imageUrl,
-      this.language,
-      this.publishedAt,
-      this.source,
-      this.categories,
-      this.relevanceScore});
+//   NewsModel(
+//       {this.uuid,
+//       this.title,
+//       this.description,
+//       this.keywords,
+//       this.snippet,
+//       this.url,
+//       this.imageUrl,
+//       this.language,
+//       this.publishedAt,
+//       this.source,
+//       this.categories,
+//       this.relevanceScore});
+
+//   NewsModel.fromJson(Map<String, dynamic> json) {
+//     uuid = json['uuid'] != null ? json['uuid'].toString() : '';
+//     title = json['title'] !=null ? json['title'].toString() : '';
+//     description = json['description'] != null ? json['description'].toString() : '';
+//     keywords = json['keywords'] !=null ? json['keywords'].toString() : '';
+//     snippet = json['snippet'] != null ? json['snippet'].toString() : '';
+//     url = json['url'] != null ? json['url'].toString() : '';
+//     imageUrl = json['image_url'] != null ? json['image_url'].toString() : '';
+//     language = json['language'] != null ? json['language'].toString() : '';
+//     publishedAt = json['published_at'] != null ? json['published_at'].toString() : '';
+//     source = json['source'] != null ? json['source'].toString() : '';
+//     categories: (json['categories'] as List<dynamic>?)
+//          ?.map((e) => e.toString())
+//        .toList() ?? [];
+//      relevanceScore: json['relevance_score'] as String? ?? '';
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = Map<String, dynamic>();
+//     data['uuid'] = uuid;
+//     data['title'] = title;
+//     data['description'] = description;
+//     data['keywords'] = keywords;
+//     data['snippet'] = snippet;
+//     data['url'] = url;
+//     data['image_url'] = imageUrl;
+//     data['language'] = language;
+//     data['published_at'] = publishedAt;
+//     data['source'] = source;
+//     data['categories'] = categories as List<Null>;
+//     data['relevance_score'] = relevanceScore;
+//     return data;
+//   }
+// }
+
+class NewsModel {
+  String? postId;
+  String? id;
+  String? name;
+  String? email;
+  String? body;
+
+  NewsModel({this.postId, this.id, this.name, this.email, this.body});
 
   NewsModel.fromJson(Map<String, dynamic> json) {
-    uuid = json['uuid'] != null ? json['uuid'].toString() : '';
-    title = json['title'] !=null ? json['title'].toString() : '';
-    description = json['description'] != null ? json['description'].toString() : '';
-    keywords = json['keywords'] !=null ? json['keywords'].toString() : '';
-    snippet = json['snippet'] != null ? json['snippet'].toString() : '';
-    url = json['url'] != null ? json['url'].toString() : '';
-    imageUrl = json['image_url'] != null ? json['image_url'].toString() : '';
-    language = json['language'] != null ? json['language'].toString() : '';
-    publishedAt = json['published_at'] != null ? json['published_at'].toString() : '';
-    source = json['source'] != null ? json['source'].toString() : '';
-    categories: (json['categories'] as List<dynamic>?)
-         ?.map((e) => e.toString())
-       .toList() ?? [];
-     relevanceScore: json['relevance_score'] as String? ?? '';
+    postId = json['postId'] != null ? json['postId'].toString() : '';
+    id = json['id'] != null ? json['id'].toString() : '';
+    name = json['name'] != null ? json['name'].toString() : '';
+    email = json['email'] != null ? json['email'].toString() : '';
+    body = json['body'] != null ? json['body'].toString() : '';
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['uuid'] = uuid;
-    data['title'] = title;
-    data['description'] = description;
-    data['keywords'] = keywords;
-    data['snippet'] = snippet;
-    data['url'] = url;
-    data['image_url'] = imageUrl;
-    data['language'] = language;
-    data['published_at'] = publishedAt;
-    data['source'] = source;
-    data['categories'] = categories as List<Null>;
-    data['relevance_score'] = relevanceScore;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['postId'] = this.postId;
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['body'] = this.body;
     return data;
   }
 }
+
+// class NewsModel {
+//   String? url;
+//   String? title;
+//   String? user;
+//   String? description;
+//   String? id;
+
+//   NewsModel({this.url, this.title, this.user, this.description, this.id});
+
+//   NewsModel.fromJson(Map<String, dynamic> json) {
+//     url = json['url'] != null ? json['url'].toString() : '';
+//     title = json['title'] != null ? json['title'].toString() : '';
+//     user = json['user'] != null ? json['user'].toString() : '';
+//     description = json['description'] != null ? json['description'].toString() : '';
+//     id = json['id'] != null ? json['id'].toString() : '';
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['url'] = this.url;
+//     data['title'] = this.title;
+//     data['user'] = this.user;
+//     data['description'] = this.description;
+//     data['id'] = this.id;
+//     return data;
+//   }
+// }

@@ -4,11 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:news_case/core/constants/api_constants.dart';
 import 'package:news_case/data/models/news_model.dart';
 
-
-
-
-
-
 // class APIService {
 //   Future<List<NewsModel>> getNews() async {
 //     final response = await http.get(Uri.parse(url));
@@ -18,7 +13,7 @@ import 'package:news_case/data/models/news_model.dart';
 
 //       List<NewsModel> news = jsonResponse
 //           .map((json) => NewsModel.fromJson(json as Map<String, dynamic>))
-//           .toList(); 
+//           .toList();
 
 //       return news;
 //     } else {
@@ -27,20 +22,16 @@ import 'package:news_case/data/models/news_model.dart';
 //   }
 // }
 
-
 class APIService {
   Future<List<NewsModel>> getNews() async {
-    final response =await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
 
     List<NewsModel> news = [];
-   final responseList = jsonDecode(response.body) as List<dynamic>;
+    List<dynamic> responseList = jsonDecode(response.body) as List<dynamic>;
 
-   for (var i = 0; i < responseList.length; i++) {
-     news.add(NewsModel.fromJson(responseList[i] as Map<String, dynamic>));
-   }
+    for (var i = 0; i < responseList.length; i++) {
+      news.add(NewsModel.fromJson(responseList[i] as Map<String, dynamic>));
+    }
     return news;
-  }  
+  }
 }
-
-
-
