@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_case/core/services/api_services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key});
@@ -11,21 +12,29 @@ class NewsCard extends StatelessWidget {
       future: apiService.getNews(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Expanded(
-            child: RefreshIndicator(
-              onRefresh: apiService.getNews,
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data!.data.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 300,
-                  crossAxisSpacing: 10,
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) {
-                  final article = snapshot.data!.data[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+          return RefreshIndicator(
+            onRefresh: apiService.getNews,
+            child: GridView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data!.data.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisExtent: 300,
+                crossAxisSpacing: 10,
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                final article = snapshot.data!.data[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: InkWell(
+                    onTap: () async {
+                      const url = 'www.facebook.com';
+                      final Uri uri = Uri(scheme: 'https', host: url);
+                      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                       
+                        throw 'Can not launch url';
+                      }
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -43,32 +52,35 @@ class NewsCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              child: Image.network(
-                               article .imageUrl.toString(),
-                                 fit: BoxFit.cover,
-                                 width: double.infinity,
-                              ),
-                            ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                child: (article.imageUrl != null && article.imageUrl.isNotEmpty)
+                                    ? Image.network(
+                                        article.imageUrl.toString(),
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      )
+                                    : const SizedBox()),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.all(6),
                               child: Text(
-                               article.title.toString(),
+                                article.title.toString(),
                                 style: TextStyle(fontSize: 14, color: Colors.grey.shade800),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
                               ),
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                              padding: const EdgeInsets.only(right: 6, left: 6, top: 5, bottom: 10),
                               child: Text(
-                             article.description.toString(),
+                                article.description.toString(),
                                 style: const TextStyle(fontSize: 16, color: Colors.black),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
@@ -78,9 +90,9 @@ class NewsCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           );
         } else {
